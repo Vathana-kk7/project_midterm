@@ -1,0 +1,282 @@
+/* Option One - Loan Calculator Styles */
+
+/* Calculator Content */
+.calculator-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Calculator Form */
+.calculator-form {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.loan-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input-group input {
+    padding: 12px 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-group input::placeholder {
+    color: #999;
+}
+
+/* Show Button */
+.show-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+.show-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.show-button:active {
+    transform: translateY(0);
+}
+
+/* Results Table */
+.results-table {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease;
+}
+
+.results-table .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.print-button {
+    background: #f5f7fa;
+    border: 2px solid #e1e1e1;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.print-button:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+#scheduleTable {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+}
+
+#scheduleTable th,
+#scheduleTable td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e1e5eb;
+}
+
+#scheduleTable th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+#scheduleTable tbody tr {
+    transition: background 0.3s ease;
+}
+
+#scheduleTable tbody tr:hover {
+    background: #f8f9fa;
+}
+
+#scheduleTable tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+#scheduleTable tbody tr:nth-child(even):hover {
+    background: #f0f0f0;
+}
+
+#scheduleTable tfoot {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+#scheduleTable tfoot td {
+    border-top: 2px solid #667eea;
+}
+
+/* Summary Card */
+.summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.5s ease;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.summary-label {
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.summary-value {
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .main-header,
+    .calculator-form,
+    .print-button {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        padding: 20px !important;
+    }
+    
+    .results-table,
+    .summary-card {
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    
+    #scheduleTable th {
+        background: #667eea !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .calculator-form,
+    .results-table,
+    .summary-card {
+        padding: 20px;
+    }
+    
+    .show-button {
+        width: 100%;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Input number arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* Date input styling */
+input[type="date"] {
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.5);
+}

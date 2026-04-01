@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Calculator - Option One</title>
+    <link rel="stylesheet" href="Css/dashboard.css">
+    <link rel="stylesheet" href="Css/option1.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Overview</span>
+                </a>
+                <a href="option1.html" class="nav-item active">
+                    <span class="nav-icon">💰</span>
+                    <span class="nav-text">Option One</span>
+                </a>
+                <a href="option2.html" class="nav-item">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Option Two</span>
+                </a>
+                <a href="option3.html" class="nav-item">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Option Three</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="index.html" class="logout-btn">
+                    <span class="nav-icon">🚪</span>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>Loan Calculator</h1>
+                    <p>Calculate your loan repayment schedule</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">A</div>
+                        <div class="user-info">
+                            <span class="user-name">Admin</span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Calculator Content -->
+            <div class="calculator-content">
+                <!-- Input Form -->
+                <div class="card calculator-form">
+                    <div class="card-header">
+                        <h2>Loan Details</h2>
+                    </div>
+                    <form id="loanForm" class="loan-form">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label for="name">Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    placeholder="Enter name"
+                                    required
+                                >
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="date">Start Date</label>
+                                <input 
+                                    type="date" 
+                                    id="date" 
+                                    name="date" 
+                                    required
+                                >
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="amount">Amount</label>
+                                <input 
+                                    type="number" 
+                                    id="amount" 
+                                    name="amount" 
+                                    placeholder="Enter amount"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                >
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="duration">Duration (months)</label>
+                                <input 
+                                    type="number" 
+                                    id="duration" 
+                                    name="duration" 
+                                    placeholder="Enter duration"
+                                    min="1"
+                                    required
+                                >
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="interest">Interest Rate (%)</label>
+                                <input 
+                                    type="number" 
+                                    id="interest" 
+                                    name="interest" 
+                                    placeholder="Enter interest rate"
+                                    min="0"
+                                    step="0.01"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="show-button">Show</button>
+                    </form>
+                </div>
+
+                <!-- Results Table -->
+                <div class="card results-table" id="resultsCard" style="display: none;">
+                    <div class="card-header">
+                        <h2>Repayment Schedule</h2>
+                        <button class="print-button" onclick="window.print()">🖨️ Print</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="scheduleTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleBody">
+                                <!-- Table rows will be generated by JavaScript -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2"><strong>Total</strong></td>
+                                    <td id="totalPrincipal"><strong>0</strong></td>
+                                    <td id="totalInterest"><strong>0</strong></td>
+                                    <td id="grandTotal"><strong>0</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Summary Card -->
+                <div class="card summary-card" id="summaryCard" style="display: none;">
+                    <div class="card-header">
+                        <h2>Loan Summary</h2>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">Borrower Name</span>
+                            <span class="summary-value" id="summaryName">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Loan Amount</span>
+                            <span class="summary-value" id="summaryAmount">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Duration</span>
+                            <span class="summary-value" id="summaryDuration">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Interest Rate</span>
+                            <span class="summary-value" id="summaryInterest">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Monthly Payment</span>
+                            <span class="summary-value" id="summaryMonthly">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Total Repayment</span>
+                            <span class="summary-value" id="summaryTotal">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="JS/option1.js"></script>
+</body>
+</html>
