@@ -1,134 +1,82 @@
-document.addEventListener('DOMContentLoaded', function () {
+const name=document.getElementById("name");
+const date=document.getElementById("date");
+const amount=document.getElementById("amount");
+const duration=document.getElementById("duration");
+const interest=document.getElementById("interest");
+const form=document.getElementById("Form");
+const scheduleBody=document.getElementById("scheduleBody");
+const resultsCard=document.getElementById("resultsCard");
 
-    const form = document.getElementById('loanForm');
-    const tbody = document.getElementById('scheduleBody');
+resultsCard.style.display = "none";
+date.valueAsDate = new Date();
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
+form.addEventListener("submit",(e)=>{
+    e.preventDefault();
 
-        const name     = document.getElementById('name').value.trim();
-        const amount   = parseFloat(document.getElementById('amount').value);
-        const duration = parseInt(document.getElementById('duration').value);
-        const rate     = parseFloat(document.getElementById('interest').value);
-        const startDate = document.getElementById('date').value;
+    let result=calculateLoan(
+        parseFloat(amount.value),
+        parseInt(duration.value),
+        parseFloat(interest.value),
+        date.value
+    );
 
-        // Validate inputs
-        if (!name || isNaN(amount) || isNaN(duration) || isNaN(rate) || !startDate) {
-            alert('Please fill in all fields correctly');
-            return;
-        }
-        if (amount <= 0 || duration <= 0 || rate < 0) {
-            alert('Amount and duration must be positive numbers');
-            return;
-        }
-        if (isNaN(new Date(startDate).getTime())) {
-            alert('Please enter a valid start date');
-            return;
-        }
-        if (duration < 3) {
-            alert('Duration must be at least 3 months for this payment method');
-            return;
-        }
+    scheduleBody.innerHTML=result.rows;
+    resultsCard.style.display="block";
+    //show result
+    let total=document.getElementById("totalPrincipal");
+    let InterTotal=document.getElementById("totalInterest");
+    let totalgrand=document.getElementById("grandTotal");
 
-        const schedule = calculate(amount, duration, rate, startDate);
-        render(name, amount, duration, rate, schedule);
-    });
-
-    function calculate(amount, duration, rate, startDate) {
-
-        const payEvery       = 3;                       // pay principal every 3 months
-        const monthlyPrincipal = amount / duration;     // equal share of principal per month
-        let   balance        = amount;
-        let   data           = [];
-
-        const start = new Date(startDate);
-
-        for (let m = 1; m <= duration; m++) {
-
-            // ── Date (DD/MM/YY) ─────────────────────────────────────────────
-            let d = new Date(start.getFullYear(), start.getMonth() + m, start.getDate());
-            let date = String(d.getDate()).padStart(2, '0') + '/' +
-                       String(d.getMonth() + 1).padStart(2, '0') + '/' +
-                       String(d.getFullYear()).slice(-2);
-
-            // ── Interest: charged every month on current outstanding balance ─
-            let interest = balance * (rate / 100);
-
-            // ── Principal: paid every 3 months ──────────────────────────────
-            let principal = 0;
-
-            if (m % payEvery === 0 && m !== duration) {
-                // Regular quarterly payment
-                principal = monthlyPrincipal * payEvery;
-                balance  -= principal;
-                if (balance < 0.0001) balance = 0;
-
-            } else if (m === duration) {
-                // Final payment – clear remaining balance
-                // If the last month also falls on a regular pay month, still use balance
-                principal = balance;
-                balance   = 0;
-            }
-
-            data.push({
-                no: m,
-                date,
-                principal,
-                interest,
-                total: principal + interest
-            });
-        }
-
-        return data;
-    }
-
-    function render(name, amount, duration, rate, data) {
-
-        tbody.innerHTML = '';
-
-        let totalP   = 0;
-        let totalI   = 0;
-        let totalAll = 0;
-
-        data.forEach(r => {
-            totalP   += r.principal;
-            totalI   += r.interest;
-            totalAll += r.total;
-
-            tbody.innerHTML += `
-            <tr>
-                <td>${r.no}</td>
-                <td>${r.date}</td>
-                <td>${format(r.principal)}</td>
-                <td>${format(r.interest)}</td>
-                <td>${format(r.total)}</td>
-            </tr>`;
-        });
-
-        document.getElementById('totalPrincipal').innerHTML = '<b>' + format(totalP)   + '</b>';
-        document.getElementById('totalInterest').innerHTML  = '<b>' + format(totalI)   + '</b>';
-        document.getElementById('grandTotal').innerHTML     = '<b>' + format(totalAll) + '</b>';
-
-        // Update summary card
-        document.getElementById('summaryName').textContent     = name;
-        document.getElementById('summaryAmount').textContent   = format(amount);
-        document.getElementById('summaryDuration').textContent = duration + ' months';
-        document.getElementById('summaryInterest').textContent = rate + '%';
-        document.getElementById('summaryTotal').textContent    = format(totalAll);
-
-        // Show result sections
-        document.getElementById('resultsCard').style.display = 'block';
-        document.getElementById('summaryCard').style.display = 'block';
-
-        // Scroll to results
-        document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function format(n) {
-        return n.toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-    }
-
+    total.innerHTML=`<strong>${result.totalPrincipal.toFixed(0)}</strong>`;
+    InterTotal.innerHTML=`<strong>${result.totalInterest.toFixed(0)}</strong>`;
+    totalgrand.innerHTML=`<strong>${result.grandTotal.toFixed(0)}</strong>`;
 });
+
+const calculateLoan=(amt,dur,rate,startDate,payEveryMounth=3)=>{
+    // pay on by one mounth
+    let balance=amt;
+    // interest
+    let monthlyPrincipal=amt/dur;
+
+    let totalPrincipal=0;
+    let totalInterest=0;
+    let rows = "";
+
+    for (let i = 1; i <= dur; i++) {
+        let currentDate=new Date(startDate);
+        currentDate.setMonth(currentDate.getMonth() + i);
+        let interestOfMonth = balance * (rate / 100);
+        let principal = 0;
+
+        // check condition
+        if (i % payEveryMounth === 0 && i !== dur) {
+            principal=monthlyPrincipal*payEveryMounth;
+            balance-=principal;
+        } 
+        else if(i===dur) {
+            principal=balance;
+            balance=0;
+        }
+        let total=principal+interestOfMonth;
+
+        totalPrincipal+=principal;
+        totalInterest+=interestOfMonth;
+
+        rows+=`
+            <tr>
+                <td>${i}</td>
+                <td>${currentDate.getDate()}/${currentDate.getMonth()+1}/${currentDate.getFullYear().toString().slice(-2)}</td>
+                <td>${principal.toFixed(2)}</td>
+                <td>${interestOfMonth.toFixed(2)}</td>
+                <td>${total.toFixed(2)}</td>
+            </tr>
+        `;
+    }
+
+    return {
+        rows,
+        totalPrincipal,
+        totalInterest,
+        grandTotal: totalPrincipal + totalInterest
+    };
+};

@@ -4,6 +4,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navItems = document.querySelectorAll('.nav-item');
     
+    // Set Option One as active by default
+    if (navItems.length > 0) {
+        navItems[0].classList.add('active');
+    }
+    
     navItems.forEach(item => {
         item.addEventListener('click', function(e) {
             const href = this.getAttribute('href');

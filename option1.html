@@ -15,10 +15,7 @@
                 <h2>Dashboard</h2>
             </div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-item">
-                    <span class="nav-icon">📊</span>
-                    <span class="nav-text">Overview</span>
-                </a>
+                
                 <a href="option1.html" class="nav-item active">
                     <span class="nav-icon">💰</span>
                     <span class="nav-text">Option One</span>
@@ -40,8 +37,8 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
+        
+        <div class="main-content">
             <!-- Header -->
             <header class="main-header">
                 <div class="header-left">
@@ -66,7 +63,7 @@
                     <div class="card-header">
                         <h2>Loan Details</h2>
                     </div>
-                    <form id="loanForm" class="loan-form">
+                    <form id="Form" class="loan-form">
                         <div class="form-grid">
                             <div class="input-group">
                                 <label for="name">Name</label>
@@ -75,7 +72,7 @@
                                     id="name" 
                                     name="name" 
                                     placeholder="Enter name"
-                                    required
+                                    
                                 >
                             </div>
                             
@@ -85,7 +82,7 @@
                                     type="date" 
                                     id="date" 
                                     name="date" 
-                                    required
+
                                 >
                             </div>
                             
@@ -98,7 +95,7 @@
                                     placeholder="Enter amount"
                                     min="0"
                                     step="0.01"
-                                    required
+                                    
                                 >
                             </div>
                             
@@ -110,7 +107,7 @@
                                     name="duration" 
                                     placeholder="Enter duration"
                                     min="1"
-                                    required
+                                    
                                 >
                             </div>
                             
@@ -123,7 +120,7 @@
                                     placeholder="Enter interest rate"
                                     min="0"
                                     step="0.01"
-                                    required
+                                    
                                 >
                             </div>
                         </div>
@@ -133,7 +130,7 @@
                 </div>
 
                 <!-- Results Table -->
-                <div class="card results-table" id="resultsCard" style="display: none;">
+                <div class="card results-table" id="Showcard" style="display: none;">
                     <div class="card-header">
                         <h2>Repayment Schedule</h2>
                         <button class="print-button" onclick="window.print()">🖨️ Print</button>
@@ -165,41 +162,11 @@
                 </div>
 
                 <!-- Summary Card -->
-                <div class="card summary-card" id="summaryCard" style="display: none;">
-                    <div class="card-header">
-                        <h2>Loan Summary</h2>
-                    </div>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <span class="summary-label">Borrower Name</span>
-                            <span class="summary-value" id="summaryName">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Loan Amount</span>
-                            <span class="summary-value" id="summaryAmount">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Duration</span>
-                            <span class="summary-value" id="summaryDuration">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Interest Rate</span>
-                            <span class="summary-value" id="summaryInterest">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Monthly Payment</span>
-                            <span class="summary-value" id="summaryMonthly">-</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Total Repayment</span>
-                            <span class="summary-value" id="summaryTotal">-</span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-        </main>
+        </div>
     </div>
 
-    <script src="JS/option1.js"></script>
+<script src="JS/option1.js"></script>
 </body>
 </html>

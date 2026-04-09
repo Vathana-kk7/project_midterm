@@ -1,4 +1,4 @@
-
+document.addEventListener('DOMContentLoaded', function() {
     const name=document.getElementById("name");
     const date=document.getElementById("date");
     const amount=document.getElementById("amount");
@@ -64,3 +64,4 @@
     document.getElementById("grandTotal").innerHTML = `<strong>${grandTotal.toFixed(0)}</strong>`;
     
     });
+});
